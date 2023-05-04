@@ -13,16 +13,17 @@ para valor 3
 12
 123
 */
+
 /*
+
 function piramid(num) {
   let piramidNumbers = '';
   for (let i = 1; i <= num; i++) {
     piramidNumbers += i;
-    console.log(`i ${i}, ${piramidNumbers}`);
+    console.log(piramidNumbers);
   }
 }
-// let test = piramid(6);
-console.log(piramid(6));
+let test = piramid(6);
 */
 /*
 2) Escribir una funcion que reciba 2 array y devuelva un array con todos los elementos que coinciden entre ellos
