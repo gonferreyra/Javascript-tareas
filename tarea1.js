@@ -120,7 +120,7 @@ class Carrito {
     let repeatedProduct = this.productos.find((prod) => prod.nombre === nombre);
     if (repeatedProduct) {
       console.log(
-        `El producto ${repeatedProduct.producto} ya existe con ${repeatedProduct.cantidad} unidades`
+        `El producto ${repeatedProduct.nombre} ya existe con ${repeatedProduct.unidades} unidades`
       );
       return;
     }
