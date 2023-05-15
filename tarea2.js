@@ -132,26 +132,28 @@ class Carrito {
 
   eliminarProducto(sku, cantidad) {
     return new Promise(async (resolve, reject) => {
-      // Validamos si existe el producto en el DB
-      const product = await findProductBySku(sku);
+      try {
+        // Validamos si existe el producto en el DB
+        const product = await findProductBySku(sku);
 
-      const productOnCart = this.productos.find(
-        (product) => product.sku === sku
-      );
-      if (productOnCart) {
-        if (cantidad < productOnCart.cantidad) {
-          productOnCart.cantidad -= cantidad;
-          // console.log(product.precio, cantidad);
-          this.precioTotal = this.precioTotal - (product.precio * cantidad);
-        } else {
-          // Si la cantidad es mayor o igual a la cantidad de ese producto en el carrito, se debe eliminar el producto del carrito
-          this.productos = this.productos.filter(
-            (product) => product.sku !== sku
-          );
-          this.precioTotal = this.precioTotal - (product.precio * productOnCart.cantidad);
+        const productOnCart = this.productos.find(
+          (product) => product.sku === sku
+        );
+        if (productOnCart) {
+          if (cantidad < productOnCart.cantidad) {
+            productOnCart.cantidad -= cantidad;
+            // console.log(product.precio, cantidad);
+            this.precioTotal = this.precioTotal - (product.precio * cantidad);
+          } else {
+            // Si la cantidad es mayor o igual a la cantidad de ese producto en el carrito, se debe eliminar el producto del carrito
+            this.productos = this.productos.filter(
+              (product) => product.sku !== sku
+            );
+            this.precioTotal = this.precioTotal - (product.precio * productOnCart.cantidad);
+          }
+          resolve(productOnCart);
         }
-        resolve(productOnCart);
-      } else {
+      } catch (error) {
         // Si el producto no existe en el carrito, se muestra un mensaje de error
         reject(`The product is not in the cart, it cannot be deleted.`);
       }
@@ -194,12 +196,12 @@ carrito.agregarProducto('FN312PPE', 1);
 // carrito.agregarProducto('WE328NJ', 2);
 // carrito.agregarProducto('FN312PPE', 2);
 
-// carrito
-//   .eliminarProducto('FN312PPE', 1)
-//   .then((product) =>
-//     console.log(
-//       `The product ${product.nombre} has been successfully removed in the requested quantity from the cart`
-//     )
-//   )
-//   .catch((error) => console.log(error));
+carrito
+  .eliminarProducto('FN312PPE', 1)
+  .then((product) =>
+    console.log(
+      `The product ${product.nombre} has been successfully removed in the requested quantity from the cart`
+    )
+  )
+  .catch((error) => console.log(error));
 
